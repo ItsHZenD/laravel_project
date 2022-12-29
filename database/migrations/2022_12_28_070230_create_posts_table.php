@@ -25,7 +25,6 @@ class CreatePostsTable extends Migration
             $table->integer('min_salary');
             $table->integer('max_salary');
             $table->integer('currency_salary')->default(1);
-            $table->integer('max_salary');
             $table->text('requirement')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
