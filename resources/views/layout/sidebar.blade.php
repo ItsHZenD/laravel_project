@@ -60,8 +60,7 @@
                                     <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
                                         aria-controls="sidebarDashboards" class="side-nav-link">
                                         <i class="uil-home-alt"></i>
-                                        <span class="badge bg-success float-end">5</span>
-                                        <span> Dashboards </span>
+                                        <span> User </span>
                                     </a>
                                     <div class="collapse show" id="sidebarDashboards">
                                         <ul class="side-nav-second-level">

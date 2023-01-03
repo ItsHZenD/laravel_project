@@ -36,4 +36,10 @@ return [
         'redirect' => env('CALLBACK_URI') . '/github',
     ],
 
+    'gitlab' => [
+        'client_id' => env('GITLAB_CLIENT_ID'),
+        'client_secret' => env('GITLAB_CLIENT_SECRET'),
+        'redirect' => env('CALLBACK_URI') . '/gitlab',
+    ],
+
 ];

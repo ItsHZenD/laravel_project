@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleEnum;
+use App\Http\Requests\Auth\RegisteringRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -18,19 +21,51 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
-
-    public function callback()
+    public function callback($provider)
     {
-        $user = Socialite::driver($provider)->user();
+        $data = Socialite::driver($provider)->user();
+        $user = User::query()
+            ->where('email', $data->getEmail())
+            ->first();
 
-        $user = User::firstOrCreate([
-            'email' => $user->getEmail()
-        ], [
-                'name' => $user->getName(),
-                'avatar' => $user->getAvatar(),
-            ])->first();
+        $checkExist = true;
+
+        if (is_null($user)) {
+            $user = new User();
+            $user->email = $data->getEmail();
+            $checkExist = false;
+        }
+        $user->name = $data->getName();
+        $user->avatar = $data->getAvatar();
+        $user->save();
 
         Auth::login($user);
+        if ($checkExist) {
+            $role = strtolower(UserRoleEnum::getKeys($user->role)[0]);
+            return redirect()->route("$role.welcome");
+        }
         return redirect()->route('register');
+    }
+
+    public function registering(RegisteringRequest $request)
+    {
+        $password = Hash::make($request->password);
+        $role = $request->role;
+
+        if (auth()->check()) {
+            User::where('id', Auth::user()->id)
+                ->update([
+                    'password' => $password,
+                    'role' => $role,
+                ]);
+        } else {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $password,
+                'role' => $role,
+            ]);
+            Auth::login($user);
+        }
     }
 }
