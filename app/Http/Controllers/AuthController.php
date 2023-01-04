@@ -39,9 +39,11 @@ class AuthController extends Controller
         $user->avatar = $data->getAvatar();
         $user->save();
 
-        Auth::login($user);
+        $role = strtolower(UserRoleEnum::getKeys($user->role)[0]);
+        Auth::guard($role)->attempt([
+            'email'
+        ]);
         if ($checkExist) {
-            $role = strtolower(UserRoleEnum::getKeys($user->role)[0]);
             return redirect()->route("$role.welcome");
         }
         return redirect()->route('register');
@@ -67,5 +69,13 @@ class AuthController extends Controller
             ]);
             Auth::login($user);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        return redirect('/login');
     }
 }

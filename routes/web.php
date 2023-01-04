@@ -25,6 +25,7 @@ Route::get('/auth/redirect/{provider}', function ($provider) {
 })->name('auth.redirect');
 
 Route::get('/auth/callback/{provider}',[AuthController::class, 'callback'])->name('auth.callback');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route::group();
 Route::get('/welcome', function () {
