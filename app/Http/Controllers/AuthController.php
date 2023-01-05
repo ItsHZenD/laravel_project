@@ -27,7 +27,6 @@ class AuthController extends Controller
         $user = User::query()
             ->where('email', $data->getEmail())
             ->first();
-
         $checkExist = true;
 
         if (is_null($user)) {
@@ -41,7 +40,8 @@ class AuthController extends Controller
 
         $role = strtolower(UserRoleEnum::getKeys($user->role)[0]);
         Auth::guard($role)->attempt([
-            'email'
+            'email' => $user->email,
+            'password' => $user->password,
         ]);
         if ($checkExist) {
             return redirect()->route("$role.welcome");

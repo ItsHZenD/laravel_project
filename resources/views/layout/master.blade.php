@@ -3,10 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{{ $title }} - {{ config('app.name') }}</title>
+    <title>{{ $title ?? '' }} - {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -52,7 +57,7 @@
                         <div class="col-12">
                             <div class="page-title-box">
                                 <h4 class="page-title">
-                                    {{ $title }}
+                                    {{ $title ?? '' }}
                                 </h4>
                             </div>
                         </div>
@@ -157,7 +162,8 @@
                                         <div id="sidebar-size">
                                             <span class="d-flex h-100">
                                                 <span class="flex-shrink-0">
-                                                    <span class="bg-light d-flex h-100 border-end flex-column p-1 px-2">
+                                                    <span
+                                                        class="bg-light d-flex h-100 border-end flex-column p-1 px-2">
                                                         <span
                                                             class="d-block p-1 bg-secondary-lighten rounded mb-1"></span>
                                                         <span
@@ -934,7 +940,7 @@
 
         <!-- App js -->
         <script src="{{ asset('js/app.min.js') }}"></script>
-
+        @stack('js')
 
         <svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
             xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev"
