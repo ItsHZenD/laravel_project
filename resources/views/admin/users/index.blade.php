@@ -31,19 +31,20 @@
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="company">Company</label>
+                        <div class="form-group">
+                            <label for="city">Company</label>
                             <div class="col-5">
                                 <select class="form-control select-filter" name="company" id="company">
                                     <option selected>All</option>
-                                    @foreach ($cities as $city)
-                                    <option  @if ((string)$city === $selectedCity) selected @endif>
-                                        {{ $city }}
-                                    </option>
+                                    @foreach($companies as $company)
+                                        <option value="{{ $company->id }}"
+                                                @if($company->id === (int)$selectedCompany) selected @endif>
+                                            {{ $company->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
                         <a href="{{ route('admin.users.index') }}">Clear Filter</a>
                     </form>
                 </div>
@@ -58,6 +59,7 @@
                                 <th>Position</th>
                                 <th>City</th>
                                 <th>Company</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,6 +95,13 @@
                                     </td>
                                     <td>
                                         {{ optional($each->company)->name }}
+                                    </td>
+                                    <td>
+                                        <form action="{{ route("admin.$table.destroy", $each) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

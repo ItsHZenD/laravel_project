@@ -13,21 +13,21 @@ class AlterAddDeletedAtColumnToSomeTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasColumn('users','deledted_at')){
+        if(!Schema::hasColumn('users','deleted_at')){
             Schema::table('users', function(Blueprint $table){
-                $table->timestamp('deledted_at')->nullable();
+                $table->timestamp('deleted_at')->nullable();
             });
         }
 
-        if(!Schema::hasColumn('companies','deledted_at')){
+        if(!Schema::hasColumn('companies','deleted_at')){
             Schema::table('companies', function(Blueprint $table){
-                $table->timestamp('deledted_at')->nullable();
+                $table->timestamp('deleted_at')->nullable();
             });
         }
 
-        if(!Schema::hasColumn('files','deledted_at')){
+        if(!Schema::hasColumn('files','deleted_at')){
             Schema::table('files', function(Blueprint $table){
-                $table->timestamp('deledted_at')->nullable();
+                $table->timestamp('deleted_at')->nullable();
             });
         }
     }

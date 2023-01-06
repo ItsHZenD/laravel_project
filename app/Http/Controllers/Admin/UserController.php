@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserRoleEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
@@ -24,18 +25,24 @@ class UserController extends Controller
     {
         $selectedRole = $request->get('role');
         $selectedCity = $request->get('city');
+        $selectedCompany = $request->get('company');
 
         $query = $this->model->clone()
             ->with('company:id,name')
             ->latest();
-        if(!empty($selectedRole) && $request->get('role') !== "All" ){
+        if(!empty($selectedRole) && $selectedRole !== "All" ){
             $query->where('role', $selectedRole);
         }
-        if(!empty($selectedCity) && $request->get('city') !== "All" ){
+        if(!empty($selectedCity) && $selectedCity !== "All" ){
             $query->where('city', $selectedCity);
         }
-        $data = $query->paginate();
+        if(!empty($selectedCompany) && $selectedCompany !== "All"){
+            $query->whereHas('company', function ($q) use ($selectedCompany) {
+                return $q->where('id', $selectedCompany);
+            });
+        }
 
+        $data = $query->paginate();
 
         // $data = $this->model->clone()
         //     ->when($request->has('role'), function($q){
@@ -50,19 +57,29 @@ class UserController extends Controller
 
         $roles = UserRoleEnum::asArray();
 
+        $companies = Company::query()
+            ->get([
+                'id',
+                'name',
+            ]);
         $cities = $this->model->clone()
             ->distinct()
             ->pluck('city');
-
 
 
         return view("admin.$this->table.index", [
             'data' => $data,
             'roles' => $roles,
             'cities' => $cities,
+            'companies' => $companies,
             'selectedRole' => $selectedRole,
             'selectedCity' => $selectedCity,
-
+            'selectedCompany' => $selectedCompany,
         ]);
+    }
+    public function destroy($userId){
+        // dd($userId);
+        User::destroy($userId);
+        return redirect()->back();
     }
 }
