@@ -54,12 +54,22 @@
                             <!--- Sidemenu -->
                             <ul class="side-nav">
 
-                                <li class="side-nav-title">Navigation</li>
+                                <li class="side-nav-title">Manage</li>
 
                                 <li class="side-nav-item menuitem-active">
                                     <a  href="{{ route("admin.users.index") }}" class="side-nav-link">
                                         <i class="uil-home-alt"></i>
                                         <span> User </span>
+                                    </a>
+                                    <div class="collapse show" id="sidebarDashboards">
+                                        <ul class="side-nav-second-level">
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="side-nav-item menuitem-active">
+                                    <a  href="{{ route("admin.posts.index") }}" class="side-nav-link">
+                                        <i class="uil-home-alt"></i>
+                                        <span> Posts </span>
                                     </a>
                                     <div class="collapse show" id="sidebarDashboards">
                                         <ul class="side-nav-second-level">
