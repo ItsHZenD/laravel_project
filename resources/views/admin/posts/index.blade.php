@@ -42,35 +42,36 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         $(document).ready(function(){
-            $.ajax({
-                url: '{{ route('api.posts') }}',
-                dataType: 'json',
-                data: {param1:'value1'},
-            })
-            .success(function(response){
-                // $("#table-data").
-            })
-            .error(function(response){
-
-            })
+            // $.ajax({
+            //     url: '{{ route('api.posts') }}',
+            //     dataType: 'json',
+            //     data: {param1:'value1'},
+            // });
             $("#csv").change(function(event){
+                var formData = new FormData();
+                formData.append('file', $(this)[0].files[0]);
                 $.ajax({
                     url: '{{ route('admin.posts.import_csv') }}',
                     type: 'POST',
                     dataType: 'json',
-                    data: {file: $(this).val()}
-                })
-                .success(function(response){
-                    $.toast({
-                        heading: 'Import Success',
-                        text: 'Your data have been imported.',
-                        showHideTransition: 'slide',
-                        position: 'top-right',
-                        icon: 'success'
-                    })
-                })
-                .error(function(response){
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        $.toast({
+                            heading: 'Import Success',
+                            text: 'Your data have been imported.',
+                            showHideTransition: 'slide',
+                            position: 'top-right',
+                            icon: 'success'
+                            })
+                        },
+                    error: function(response){
 
+                        }
                 });
             });
         });

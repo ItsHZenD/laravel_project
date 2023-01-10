@@ -11,4 +11,16 @@ class Company extends Model
 
     public $timestamps = false;
 
+    protected $fillable =[
+        "name",
+        "address",
+        "address2",
+        "district",
+        "city",
+        "country",
+        "zipcode",
+        "phone",
+        "email",
+        "logo",
+    ];
 }
