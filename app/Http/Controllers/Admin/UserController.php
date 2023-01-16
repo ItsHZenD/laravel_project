@@ -58,14 +58,13 @@ class UserController extends Controller
         $roles = UserRoleEnum::asArray();
 
         $companies = Company::query()
-            ->get([
-                'id',
-                'name',
-            ]);
+        ->get([
+            'id',
+            'name',
+        ]);
         $cities = $this->model->clone()
-            ->distinct()
-            ->pluck('city');
-
+        ->distinct()
+        ->pluck('city');
 
         return view("admin.$this->table.index", [
             'data' => $data,

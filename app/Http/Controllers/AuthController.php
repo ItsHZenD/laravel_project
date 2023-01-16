@@ -53,7 +53,6 @@ class AuthController extends Controller
     {
         $password = Hash::make($request->password);
         $role = $request->role;
-
         if (auth()->check()) {
             User::where('id', Auth::user()->id)
                 ->update([

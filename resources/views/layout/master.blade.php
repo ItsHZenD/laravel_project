@@ -940,6 +940,7 @@
 
         <!-- App js -->
         <script src="{{ asset('js/app.min.js') }}"></script>
+        <script src="{{ asset('js/helper.js') }}"></script>
         @stack('js')
 
         <svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"

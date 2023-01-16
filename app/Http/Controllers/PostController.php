@@ -15,6 +15,18 @@ class PostController extends Controller
     }
 
     public function index(){
-        return  $this->model->paginate();
+        // return $this->model->first()->currency_salary_code;
+        $data = $this->model->paginate(10);
+        foreach($data as $each) {
+            // $each->append('currency_salary_code');
+            $each->currency_salary = $each->currency_salary_code;
+            $each->status = $each->status_name;
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $data->getCollection(),
+            'pagination' => $data->linkCollection()
+        ]);
     }
 }
