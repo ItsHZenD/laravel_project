@@ -16,8 +16,8 @@
                         <ul class="pagination pagination-rounded mb-0" id="pagination">
 
                         </ul>
+                    </nav>
                 </div>
-                </nav>
                 <div class="card-body">
                     <table class="table table-striped" id="table-data">
                         <thead>
@@ -56,8 +56,9 @@
                 url: '{{ route('api.posts') }}',
                 dataType: 'json',
                 // data: {param1:'value1'},
+                data: {page: {{ request()->get('page') ?? 1 }} },
                 success: function(response) {
-                    response.data.forEach(function(each) {
+                    response.data.data.forEach(function(each) {
                         let location = each.district + ' - ' + each.city;
                         let remotable = each.remotable ? 'x' : '';
                         let is_partime = each.is_partime ? 'x' : '';
@@ -80,10 +81,17 @@
                             .append($('<td>').append(created_at))
                         );
                     });
-                    renderPagination(response.pagination);
+                    renderPagination(response.data.pagination);
                 },
                 error: function(response) {
-
+                    console.log(response.responseJSON);
+                    $.toast({
+                            heading: 'Import Error',
+                            text: response.responseJSON.message,
+                            showHideTransition: 'slide',
+                            position: 'top-right',
+                            icon: 'error'
+                        })
                 }
             });
             $(document).on('click', '#pagination > li > a', function (event) {
