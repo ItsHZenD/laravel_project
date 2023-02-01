@@ -30,7 +30,7 @@ class PostController extends Controller
         //     'pagination' => $data->linkCollection()
         // ]);
 
-        return $this->errorResponse('Import Failed');
+        // return $this->errorResponse('Import Failed');
 
         $arr['data'] = $data->getCollection();
         $arr['pagination'] = $data->linkCollection();
